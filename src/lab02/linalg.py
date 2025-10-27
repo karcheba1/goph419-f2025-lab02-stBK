@@ -59,4 +59,9 @@ def forward_substitution(L, b):
     # form the augmented matrix
     aug = np.hstack([L, b])
 
+    for k, row in enumerate(L):
+        aug[k : k + 1, n:] = (
+            aug[k : k + 1, n:] - L[k : k + 1, :k] @ aug[:k, n:]
+        ) / aug[k, k]  # row[k] == L[k,k]
+
     return np.reshape(aug[:, n:], shape=b_shape)
